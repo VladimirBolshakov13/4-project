@@ -1,29 +1,42 @@
-# 108021260
-from typing import List
+# 108180274
+def min_platforms(weights: list, limit: int) -> int:
+    """
+    Функция вычисляет минимальное количество платформ, необходимых для перевозки роботов.
 
-
-def min_platforms(weights: List[int], limit: int) -> int:
+    :param weights: Список весов роботов.
+    :param limit: Максимальный предел веса, который можно перевезти на одной платформе.
+    :return: Минимальное количество платформ.
+    """
     weights.sort()  # Сортируем веса роботов
     platforms = 0  # Инициализируем количество платформ
-    # Указатели на самый легкий и самый тяжелый роботы
-    left, right = 0, len(weights) - 1
+    left, right = (
+        0,
+        len(weights) - 1,
+    )  # Указатели на самый легкий и самый тяжелый роботы
 
     while left <= right:
-        # сли самый тяжелый и самый легкий роботы можно поместить на одну платформу, перевозим их
-        if weights[left] + weights[right] <= limit:
+        total_weight = weights[left] + weights[right]
+        # Если вес самого тяжелого и самого легкого роботов можно поместить на одну платформу, перевозим их
+        if total_weight <= limit:
             left += 1
-            right -= 1
-        else:
-            # Если не получается, перевозим только самого тяжелого робота
-            right -= 1
+        right -= 1
         platforms += 1  # Увеличиваем количество использованных платформ
 
     return platforms
 
 
-# Чтение входных данных
-weights = list(map(int, input().split()))
-limit = int(input())
+def main():
+    """
+    Основная функция программы для чтения входных данных, вызова функции min_platforms
+    и вывода результата.
+    """
+    # Чтение входных данных
+    weights = list(map(int, input().split()))
+    limit = int(input())
 
-# Вызов функции и вывод результата
-print(min_platforms(weights, limit))
+    # Вызов функции и вывод результата
+    print(min_platforms(weights, limit))
+
+
+if __name__ == "__main__":
+    main()
